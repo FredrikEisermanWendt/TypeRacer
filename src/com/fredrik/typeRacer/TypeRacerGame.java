@@ -52,6 +52,8 @@ public class TypeRacerGame {
         countWrongWords();
         System.out.print("Antal felskrivna ord: ");
         System.out.println(wrongWordsList.size());
+        System.out.println(wrongWordsList);
+//
     }
     
     
@@ -67,7 +69,7 @@ public class TypeRacerGame {
     
     
     private double calculateStopWatch(Instant start, Instant end) {
-        int nano = Duration.between(start, end).getNano();
+        double nano = Duration.between(start, end).getNano();
         return nano / 9.0;
     }
     
@@ -84,7 +86,7 @@ public class TypeRacerGame {
     
     
     public double wPM(double seconds, int noOfWords) {
-        int minutes = (int) seconds / 60;
+        double  minutes =  seconds / 60;
         double wPM = noOfWords / minutes;
         return wPM;
         
