@@ -2,6 +2,8 @@ package com.fredrik.typeRacer;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.Math.round;
@@ -10,33 +12,58 @@ public class TypeRacerGame {
     
     
     Scanner scanner = new Scanner(System.in);
-    String[] orgSentance
+    String[] origSentence;
+    String[] inputScentece;
+    List<String> wrongWordsList = new ArrayList<>();
+    
     
     public void startGame(String sentence) {
         // TODO: Refine this method
         
-        Instant start = startStopWatch();
+        
         System.out.println("Type the following sentence as fast as you can:");
         System.out.println(sentence);
         
+        Instant start = startStopWatch();
         String userInput = scanner.nextLine();
+        Instant end = stopStopwatch();
         
         boolean isCorrect = userInput.equals(sentence);
-//        Dela upp sentence i ord, lägg i arraylist,
-//        dela upp input i ord och lägg i arrayList,
-//        se vilka
-        
         System.out.println(isCorrect ? "Correct!" : "Incorrect!");
-        Instant end = stopStopwatch();
-        System.out.println(calculateStopWatch(start, end));
+        
+        divideOriginalString(sentence);
+        divideInputString(userInput);
+        
+        double seconds = calculateStopWatch(start, end);
+        printFaults(seconds);
         
         
     }
     
-    public void divideString(String s, String[] array){
-        String[] tempArr = s.split(" ");
-        
+    
+    private void printFaults(double seconds) {
+//        tid det tog att skriva in
+        System.out.print("Antal sekunder på försöket: ");
+        System.out.println(seconds);
+//        WPM
+        System.out.print("WPM: ");
+        System.out.println(wPM(seconds, inputScentece.length));
+//        antal fel ord
+        countWrongWords();
+        System.out.print("Antal felskrivna ord: ");
+        System.out.println(wrongWordsList.size());
     }
+    
+    
+    private void divideInputString(String s) {
+        inputScentece = s.split(" ");
+    }
+    
+    
+    public void divideOriginalString(String s) {
+        origSentence = s.split(" ");
+    }
+    
     
     
     private double calculateStopWatch(Instant start, Instant end) {
@@ -64,6 +91,13 @@ public class TypeRacerGame {
     }
     
     
+    public void countWrongWords() {
+        for (int i = 0; i < inputScentece.length; i++) {
+            if (!inputScentece[i].equals(origSentence[i])) {
+                wrongWordsList.add(inputScentece[i]);
+            }
+        }
+    }
     
     
 }

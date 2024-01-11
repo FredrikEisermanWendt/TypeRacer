@@ -11,7 +11,6 @@ public class Main {
         typeRacerGame.startGame(sentenceGenerator.getRandomSentence());
         
         
-        
     }
     
     
